@@ -44,3 +44,30 @@ None. No command failed, and there were no environment blockers.
 
 The 25 passing tests cover AC-1 to AC-19 (loading, error and retry, empty, filters, create with validation, double submit, failed create) as user-visible behavior.
 AC-20 is open.
+
+---
+
+# Re-run on the final commit
+
+**Verdict: PASS** for the commands run: lint, test and build all exited 0 on commit `8157e11`, the commit on `main` and `origin/main`.
+The dev server was not started, and nothing was pushed or committed by this run.
+
+Run at 2026-09-24T22:34 (+03:00) from the Repository Root, with Node v26.10.0. `git status --short` was empty before and after the run (a clean tree, so the working tree equals the commit). Read-only: nothing was installed or fixed. The `dist/` build output is gitignored.
+
+| Command | Exit | Result |
+| --- | --- | --- |
+| `npm run lint` (`oxlint`) | 0 | No warnings or errors printed. |
+| `npm run test` (`vitest run`) | 0 | Vitest v5.0.1: 3 test files passed (3), 25 tests passed (25), duration 26.98 s. |
+| `npm run build` (`tsc -b && vite build`) | 0 | Type-check passed. Vite v8.3.0 built 26 modules in 596 ms. Output file names match the first run: `index-pVvt0wkb.css` and `index-C55XML7q.js`. |
+
+## Not run
+
+- `npm run dev` and `npm run preview`: no server was started.
+- A clean checkout with a fresh `npm ci`: dependencies were not reinstalled. This run checks the working tree at the final commit, using the existing `node_modules`. It does not prove the repository installs and builds from scratch.
+
+## Not verified by this run
+
+- The manual browser check is recorded in `workflow-log.md` as the developer's own report. This run did not see it.
+- The review findings fixed after `code-reviewer` were not re-reviewed.
+- The L-2 catch in `src/main.tsx` has no automated test.
+- Mock data resets on reload, a requirements non-goal.
